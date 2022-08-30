@@ -9,9 +9,8 @@ function App() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
   <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div className="navbar-nav mx-auto">
-    <a className="nav-item nav-link" href="#"><Link style={{color: "white", textDecoration: "none"}} to="todo">Home</Link>
-</a>
-      <a className="nav-item nav-link" href="#"><Link style={{color: "white", textDecoration: "none"}} to="todo/About">About</Link></a>
+    <Link className="nav-item nav-link" style={{color: "white", textDecoration: "none"}} to="todo">Home</Link>
+      <Link className="nav-item nav-link" style={{color: "white", textDecoration: "none"}} to="todo/About">About</Link>
      </div>
   </div>
 </nav>     
