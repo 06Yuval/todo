@@ -9,8 +9,6 @@ class Home extends React.Component {
         this.state = {
             toDoList: props.initialList,
             addValue: '',
-            compFilterMode: '',
-            leftFilterMode: '',
             activatedFilter: 'all'
         };
     };
@@ -56,31 +54,53 @@ class Home extends React.Component {
         toDo.checked = !toDo.checked;
     }
 
-    filterCompleted = () => {
-        let newList = [...this.state.toDoList];
-        newList = newList.filter((toDo) => {
-            if(toDo.checked) {
-                return toDo
-            }
-        });
-        this.setState((state) => {
-            this.state.compFilterMode =  this.state.toDoList;
-            this.state.toDoList = newList;
-            return state;
-        });
+    
+    getFilteredTodos = ()=> {
+        if(this.state.activatedFilter == 'all') {
+            return this.state.toDoList;
+        }
+        if(this.state.activatedFilter == 'completed') {
+            let newList = [...this.state.toDoList];
+            newList = newList.filter((toDo) => {
+                if(toDo.checked) {
+                    return toDo
+                }
+            });
+            return newList;
+        }
+        
+        if(this.state.activatedFilter == 'left'){
+            let newList = [...this.state.toDoList];
+            newList = newList.filter((toDo) => {
+                if(!toDo.checked) {
+                    return toDo
+                }
+            });
+            return newList;
+        }
     }
 
-    filterAll = () => {
-        console.log(this.state.compFilterMode);
+    filterCompleted = () => {
         this.setState((state) => {
-            this.state.toDoList = this.state.compFilterMode;
+            this.state.activatedFilter = 'completed';
             return state;
         })
     }
 
-    getFilteredTodos = ()=> {
-
+    filterLeft = () => {
+        this.setState((state) => {
+            this.state.activatedFilter = 'left';
+            return state;
+        })
     }
+
+    filterAll = () => {
+        this.setState((state) => {
+            this.state.activatedFilter = 'all';
+            return state;
+        })
+    }
+
 
     render(){
         const { toDoList } = this.state;
@@ -92,12 +112,12 @@ class Home extends React.Component {
                 </div>
 
                 <br />
-                <ToDoList list={this.getFilteredTodos} remove={this.remove} onCheck={this.onCheck}></ToDoList>
+                <ToDoList list={this.getFilteredTodos()} remove={this.remove} onCheck={this.onCheck}></ToDoList>
                 <br /> 
 
                 <button className='ml-4 btn btn-primary' onClick={() => this.filterAll()} style={{marginLeft: "12.5%", marginRight: "10px"}} >ALL</button>
                 <button className='btn btn-primary' onClick={() => this.filterCompleted()} style={{marginRight: "10px"}}>COMPLETED</button>
-                <button className='btn btn-primary'>LEFT</button>
+                <button className='btn btn-primary' onClick={() => this.filterLeft()}>LEFT</button>
 
             </div>
         );
