@@ -1,13 +1,14 @@
 import React from 'react';
 import ToDoList from '../cmps/ToDoList';
 import { nanoid } from 'nanoid';
+import toDoArr from '../initalToDoList';
 
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            toDoList: props.initialList,
+            toDoList: toDoArr,
             addValue: '',
             activatedFilter: 'all'
         };
@@ -31,11 +32,13 @@ class Home extends React.Component {
         })  
     }
 
-    add = () => {
+    add = (event) => {
+        event.preventDefault();
         if(!this.state.addValue || !this.state.addValue.length) {
             return;
         }
         else {
+        event.target.reset();
         const toDo = {
             id: nanoid(),
             title: this.state.addValue
@@ -52,6 +55,7 @@ class Home extends React.Component {
 
     onCheck = (toDo) => {
         toDo.checked = !toDo.checked;
+        this.forceUpdate();
     }
 
     
@@ -105,10 +109,12 @@ class Home extends React.Component {
     render(){
         return(
             <div>
+                <form onSubmit={(event) => this.add(event)}>
                 <div className="mx-auto input-group input-group-sm mb-3" style={{width: "75%"}}>
                 <input name="addValue" className='form-control' type="text" placeholder='What do you need to do today?' onChange={this.handleChange}/>
-                <button onClick={() => this.add()} className='btn btn-primary'>Add</button>
+                <button className='btn btn-primary'>Add</button>
                 </div>
+                </form>
 
                 <br />
                 <ToDoList list={this.getFilteredTodos()} remove={this.remove} onCheck={this.onCheck}></ToDoList>
