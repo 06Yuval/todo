@@ -56,10 +56,10 @@ class Home extends React.Component {
 
     
     getFilteredTodos = ()=> {
-        if(this.state.activatedFilter == 'all') {
+        if(this.state.activatedFilter === 'all') {
             return this.state.toDoList;
         }
-        if(this.state.activatedFilter == 'completed') {
+        if(this.state.activatedFilter === 'completed') {
             let newList = [...this.state.toDoList];
             newList = newList.filter((toDo) => {
                 if(toDo.checked) {
@@ -68,8 +68,8 @@ class Home extends React.Component {
             });
             return newList;
         }
-        
-        if(this.state.activatedFilter == 'left'){
+
+        if(this.state.activatedFilter === 'left'){
             let newList = [...this.state.toDoList];
             newList = newList.filter((toDo) => {
                 if(!toDo.checked) {
@@ -103,7 +103,6 @@ class Home extends React.Component {
 
 
     render(){
-        const { toDoList } = this.state;
         return(
             <div>
                 <div className="mx-auto input-group input-group-sm mb-3" style={{width: "75%"}}>
